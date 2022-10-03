@@ -5,6 +5,7 @@ import { withTRPC } from '@trpc/next';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import type { AppType } from 'next/app';
+import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
 import superjson from 'superjson';
 
@@ -19,13 +20,19 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps }
 }) => {
   return (
-    <SessionProvider session={session}>
-      <ThemeProvider theme={defaultTheme}>
-        <GlobalStyle />
-        <CommandPalette />
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </SessionProvider>
+    <>
+      <Head>
+        <title>iFinance</title>
+      </Head>
+
+      <SessionProvider session={session}>
+        <ThemeProvider theme={defaultTheme}>
+          <GlobalStyle />
+          <CommandPalette />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </SessionProvider>
+    </>
   );
 };
 
