@@ -1,6 +1,7 @@
 import { Header } from '../../components/Header';
 import { SearchForm } from '../../components/SearchForm';
 import { Summary } from '../../components/Summary';
+import { useTransaction } from '../../hooks/useTransaction';
 import { dateFormatter, priceFormatter } from '../../utils/formatter';
 import { trpc } from '../../utils/trpc';
 import {
@@ -10,7 +11,11 @@ import {
 } from './styles';
 
 const Dashboard = () => {
-  const { data: transactions } = trpc.useQuery(['transactions.getAll']);
+  const { setTransactions } = useTransaction();
+
+  const { data: transactions } = trpc.useQuery(['transactions.getAll'], {
+    onSuccess: transactions => setTransactions(transactions)
+  });
 
   return (
     <div>
