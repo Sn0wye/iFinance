@@ -68,7 +68,7 @@ export const CommandPalette = () => {
     >
       <Dialog
         onClose={setIsOpen}
-        className='fixed inset-0 p-4 pt-[25vh] overflow-y-auto'
+        className='fixed inset-0 overflow-y-auto p-4 pt-[25vh]'
       >
         <Transition.Child
           enter='duration-300 ease-out'
@@ -91,26 +91,26 @@ export const CommandPalette = () => {
           <Combobox
             as='div'
             onChange={handleSelection}
-            className='relative mx-auto max-w-xl rounded-xl bg-zinc-800 shadow-2xl ring-1 ring-white/5 divide-y divide-zinc-700 overflow-hidden'
+            className='relative mx-auto max-w-xl divide-y divide-zinc-700 overflow-hidden rounded-xl bg-zinc-800 shadow-2xl ring-1 ring-white/5'
           >
             <div className='flex items-center px-4'>
               <MagnifyingGlass size={24} className='text-zinc-100' />
               <Combobox.Input
-                className='w-full bg-transparent border-0 p-4 text-zinc-100 focus:ring-0 placeholder:text-zinc-400 text-base'
+                className='w-full border-0 bg-transparent p-4 text-base text-zinc-100 placeholder:text-zinc-400 focus:ring-0'
                 placeholder='Search...'
                 onChange={e => setQuery(e.target.value)}
                 value={query}
               />
             </div>
             {filteredOptions.length > 0 && (
-              <Combobox.Options static className='pt-4 text-base max-h-96'>
+              <Combobox.Options static className='max-h-96 pt-4 text-base'>
                 {filteredOptions.map(option => (
                   <Combobox.Option key={option.id} value={option}>
                     {({ active }) => (
                       <div
-                        className={`p-3 flex items-center gap-3 ${cn(
+                        className={`flex items-center gap-3 p-3 ${cn(
                           active,
-                          'bg-zinc-900 cursor-pointer'
+                          'cursor-pointer bg-zinc-900'
                         )}`}
                       >
                         {option.icon && (
@@ -131,7 +131,7 @@ export const CommandPalette = () => {
               </Combobox.Options>
             )}
             {query && filteredOptions.length === 0 && (
-              <p className='p-3 text-zinc-400 flex items-center gap-3'>
+              <p className='flex items-center gap-3 p-3 text-zinc-400'>
                 <SmileySad size={20} />
                 No results found.
               </p>
