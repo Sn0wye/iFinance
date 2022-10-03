@@ -30,10 +30,10 @@ export const TransactionsTable = styled.table`
 `;
 
 interface PriceHighlightProps {
-  variant: 'INCOME' | 'OUTCOME';
+  variant: 'income' | 'outcome';
 }
 
 export const PriceHighlight = styled.span<PriceHighlightProps>`
   color: ${({ variant, theme }) =>
-    variant === 'INCOME' ? theme['green-300'] : theme['red-300']};
+    variant === 'income' ? theme['green-300'] : theme['red-300']};
 `;
