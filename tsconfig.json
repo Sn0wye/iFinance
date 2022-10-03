@@ -23,7 +23,8 @@
     "**/*.cjs",
     "**/*.mjs",
     "postcss.config.js",
-    "tailwind.config.js"
+    "tailwind.config.js",
+    "prettier.config.js"
   ],
   "exclude": ["node_modules"]
 }
