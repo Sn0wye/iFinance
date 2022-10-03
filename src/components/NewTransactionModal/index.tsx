@@ -3,9 +3,13 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react';
 import { useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { z } from 'zod';
 
 import { useTransaction } from '../../hooks/useTransaction';
+import {
+  newTransactionInput,
+  TNewTransactionInput
+} from '../../schemas/transaction/newTransactionInput';
+import { trpc } from '../../utils/trpc';
 import {
   Close,
   Content,
@@ -15,14 +19,7 @@ import {
   TransactionTypeButton
 } from './styles';
 
-const newTransactionFormSchema = z.object({
-  description: z.string(),
-  amount: z.number(),
-  category: z.string(),
-  type: z.enum(['income', 'outcome'])
-});
-
-type FormFields = z.infer<typeof newTransactionFormSchema>;
+const newTransactionFormSchema = newTransactionInput;
 
 export const NewTransactionModal = () => {
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -33,7 +30,7 @@ export const NewTransactionModal = () => {
     control,
     reset,
     formState: { errors, isSubmitting }
-  } = useForm<FormFields>({
+  } = useForm<TNewTransactionInput>({
     resolver: zodResolver(newTransactionFormSchema),
     defaultValues: {
       type: 'income'
@@ -42,8 +39,12 @@ export const NewTransactionModal = () => {
 
   const { createTransaction } = useTransaction();
 
-  const handleCreateNewTransaction = async (data: FormFields) => {
-    await createTransaction(data);
+  const mutation = trpc.useMutation(['transactions.create'], {
+    onSuccess: data => createTransaction(data)
+  });
+
+  const handleCreateNewTransaction = async (data: TNewTransactionInput) => {
+    mutation.mutate(data);
     reset();
     closeRef.current?.click();
   };
