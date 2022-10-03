@@ -5,10 +5,14 @@ import { withTRPC } from '@trpc/next';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import type { AppType } from 'next/app';
+import { ThemeProvider } from 'styled-components';
 import superjson from 'superjson';
 
+import { CommandPalette } from '../components/CommandPalette';
 import type { AppRouter } from '../server/router';
+import { GlobalStyle } from '../styles/global';
 import '../styles/globals.css';
+import { defaultTheme } from '../styles/themes/default';
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -16,7 +20,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <Component {...pageProps} />
+      <ThemeProvider theme={defaultTheme}>
+        <GlobalStyle />
+        <CommandPalette />
+        <Component {...pageProps} />
+      </ThemeProvider>
     </SessionProvider>
   );
 };
