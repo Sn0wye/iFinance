@@ -21,11 +21,11 @@ export const SearchForm = () => {
     resolver: zodResolver(searchFormSchema)
   });
 
-  const { fetchTransactions } = useTransaction();
+  const { filterByQuery } = useTransaction();
 
   const handleSearch = async (data: FormFields) => {
     const { query } = data;
-    await fetchTransactions(query);
+    filterByQuery(query);
   };
 
   return (
