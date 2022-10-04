@@ -11,7 +11,8 @@ const Dashboard = () => {
   const { setTransactions, transactions } = useTransaction();
 
   trpc.useQuery(['transactions.getAll'], {
-    onSuccess: data => setTransactions(data)
+    onSuccess: data => setTransactions(data),
+    refetchOnWindowFocus: false
   });
 
   return (
