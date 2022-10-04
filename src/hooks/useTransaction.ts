@@ -5,6 +5,7 @@ interface TransactionsContext {
   transactions: Transaction[];
   filteredTransactions: Transaction[];
   createTransaction: (transaction: Transaction) => void;
+  deleteTransaction: (transaction: Transaction) => void;
   setTransactions: (transactions: Transaction[]) => void;
   filterByQuery: (q: string) => void;
 }
@@ -31,5 +32,14 @@ export const useTransaction = create<TransactionsContext>((set, get) => ({
       transactions: [transaction, ...state.transactions],
       filteredTransactions: [transaction, ...state.transactions]
     }));
+  },
+  deleteTransaction: deletedTransaction => {
+    const transactions = get().transactions.filter(
+      transaction => transaction.id !== deletedTransaction.id
+    );
+    set({
+      transactions,
+      filteredTransactions: transactions
+    });
   }
 }));
