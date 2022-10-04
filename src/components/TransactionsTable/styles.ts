@@ -30,3 +30,15 @@ export const PriceHighlight = styled.span<PriceHighlightProps>`
   color: ${({ variant, theme }) =>
     variant === 'income' ? theme['green-300'] : theme['red-300']};
 `;
+
+export const DeleteButton = styled.button`
+  color: ${({ theme }) => theme['red-300']};
+  padding: 0.5rem;
+  line-height: 0;
+  border-radius: 4px;
+
+  &:hover {
+    background: ${({ theme }) => theme['gray-800']};
+    transition: background-color 0.2s;
+  }
+`;
