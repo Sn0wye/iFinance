@@ -1,9 +1,19 @@
+import { TrashSimple } from 'phosphor-react';
+
 import { useTransaction } from '../../hooks/useTransaction';
 import { dateFormatter, priceFormatter } from '../../utils/formatter';
-import { PriceHighlight, TableContainer } from './styles';
+import { trpc } from '../../utils/trpc';
+import { DeleteButton, PriceHighlight, TableContainer } from './styles';
 
 export const TransactionsTable = () => {
-  const { filteredTransactions } = useTransaction();
+  const { filteredTransactions, deleteTransaction } = useTransaction();
+  const deleteMutation = trpc.useMutation('transactions.delete', {
+    onSuccess: deletedTransaction => deleteTransaction(deletedTransaction)
+  });
+
+  const handleDeleteTransaction = (transactionId: string) => {
+    deleteMutation.mutate(transactionId);
+  };
 
   return (
     <TableContainer>
@@ -21,6 +31,13 @@ export const TransactionsTable = () => {
             </td>
             <td>{transaction.category}</td>
             <td>{dateFormatter.format(new Date(transaction.createdAt))}</td>
+            <td>
+              <DeleteButton
+                onClick={() => handleDeleteTransaction(transaction.id)}
+              >
+                <TrashSimple size={20} />
+              </DeleteButton>
+            </td>
           </tr>
         ))}
       </tbody>
