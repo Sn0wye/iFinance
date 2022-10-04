@@ -1,3 +1,4 @@
+import * as Dialog from '@radix-ui/react-dialog';
 import styled from 'styled-components';
 
 export const TableContainer = styled.table`
@@ -31,7 +32,7 @@ export const PriceHighlight = styled.span<PriceHighlightProps>`
     variant === 'income' ? theme['green-300'] : theme['red-300']};
 `;
 
-export const DeleteButton = styled.button`
+export const DeleteButton = styled(Dialog.Trigger)`
   color: ${({ theme }) => theme['red-300']};
   padding: 0.5rem;
   line-height: 0;

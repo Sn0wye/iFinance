@@ -1,12 +1,16 @@
+import * as Dialog from '@radix-ui/react-dialog';
 import { TrashSimple } from 'phosphor-react';
 
 import { useTransaction } from '../../hooks/useTransaction';
 import { dateFormatter, priceFormatter } from '../../utils/formatter';
 import { trpc } from '../../utils/trpc';
+import { ConfirmationModal } from '../ConfirmationModal';
 import { DeleteButton, PriceHighlight, TableContainer } from './styles';
 
 export const TransactionsTable = () => {
-  const { filteredTransactions, deleteTransaction } = useTransaction();
+  const { filteredTransactions } = useTransaction();
+
+  const { deleteTransaction } = useTransaction();
   const deleteMutation = trpc.useMutation('transactions.delete', {
     onSuccess: deletedTransaction => deleteTransaction(deletedTransaction)
   });
@@ -32,11 +36,18 @@ export const TransactionsTable = () => {
             <td>{transaction.category}</td>
             <td>{dateFormatter.format(new Date(transaction.createdAt))}</td>
             <td>
-              <DeleteButton
-                onClick={() => handleDeleteTransaction(transaction.id)}
-              >
-                <TrashSimple size={20} />
-              </DeleteButton>
+              <Dialog.Root>
+                <DeleteButton>
+                  <TrashSimple size={20} />
+                </DeleteButton>
+                <ConfirmationModal
+                  title='Delete Transaction'
+                  message='Are you sure you want to delete this transaction?'
+                  confirmMessage='Yes, delete'
+                  icon={<TrashSimple size={48} color='#F75A68' />}
+                  onConfirm={() => handleDeleteTransaction(transaction.id)}
+                />
+              </Dialog.Root>
             </td>
           </tr>
         ))}
