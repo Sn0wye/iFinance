@@ -11,10 +11,10 @@ import {
 } from './styles';
 
 const Dashboard = () => {
-  const { setTransactions } = useTransaction();
+  const { setTransactions, filteredTransactions } = useTransaction();
 
-  const { data: transactions } = trpc.useQuery(['transactions.getAll'], {
-    onSuccess: transactions => setTransactions(transactions)
+  trpc.useQuery(['transactions.getAll'], {
+    onSuccess: data => setTransactions(data)
   });
 
   return (
@@ -27,22 +27,23 @@ const Dashboard = () => {
 
         <TransactionsTable>
           <tbody>
-            {transactions &&
-              transactions.map(transaction => (
-                <tr key={transaction.id}>
-                  <td width='50%'>{transaction.description}</td>
-                  <td>
-                    <PriceHighlight variant={transaction.type}>
-                      {transaction.type === 'outcome' && '- '}
-                      {priceFormatter.format(transaction.amount)}
-                    </PriceHighlight>
-                  </td>
-                  <td>{transaction.category}</td>
-                  <td>
-                    {dateFormatter.format(new Date(transaction.createdAt))}
-                  </td>
-                </tr>
-              ))}
+            {filteredTransactions.map(transaction => (
+              <tr key={transaction.id}>
+                <td width='50%'>{transaction.description}</td>
+                <td>
+                  <PriceHighlight
+                    variant={
+                      transaction.type === 'income' ? 'income' : 'outcome'
+                    }
+                  >
+                    {transaction.type === 'outcome' && '- '}
+                    {priceFormatter.format(transaction.amount)}
+                  </PriceHighlight>
+                </td>
+                <td>{transaction.category}</td>
+                <td>{dateFormatter.format(new Date(transaction.createdAt))}</td>
+              </tr>
+            ))}
           </tbody>
         </TransactionsTable>
       </TransactionsContainer>
