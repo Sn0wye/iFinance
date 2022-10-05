@@ -1,15 +1,9 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import * as RadioGroup from '@radix-ui/react-radio-group';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
-const overlayShow = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
+import { fadeIn, fadeOut } from '../../styles/keyframes/fade';
+import { scaleDown, scaleUp } from '../../styles/keyframes/scale';
 
 export const Overlay = styled(Dialog.Overlay)`
   position: fixed;
@@ -17,7 +11,13 @@ export const Overlay = styled(Dialog.Overlay)`
   height: 100vh;
   inset: 0;
   background: rgba(0, 0, 0, 0.75);
-  animation: ${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  &[data-state='open'] {
+    animation: ${fadeIn} 0.3s ease-out;
+  }
+  &[data-state='closed'] {
+    animation: ${fadeOut} 0.2s ease-in;
+  }
 `;
 
 export const Content = styled(Dialog.Content)`
@@ -68,6 +68,13 @@ export const Content = styled(Dialog.Content)`
         cursor: not-allowed;
       }
     }
+  }
+
+  &[data-state='open'] {
+    animation: ${fadeIn}, ${scaleUp} 0.3s ease-out;
+  }
+  &[data-state='closed'] {
+    animation: ${fadeOut}, ${scaleDown} 0.2s ease-in;
   }
 `;
 
