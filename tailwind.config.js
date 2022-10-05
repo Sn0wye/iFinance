@@ -27,6 +27,9 @@ module.exports = {
             transform: 'rotate(0deg)'
           }
         }
+      },
+      fontFamily: {
+        overpass: ['Overpass', 'sans-serif']
       }
     }
   },
