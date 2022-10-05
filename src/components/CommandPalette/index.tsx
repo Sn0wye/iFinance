@@ -1,5 +1,5 @@
 import { Combobox, Dialog, Transition } from '@headlessui/react';
-import { ArrowRight, MagnifyingGlass, SmileySad } from 'phosphor-react';
+import { MagnifyingGlass, SmileySad } from 'phosphor-react';
 import {
   cloneElement,
   Fragment,
@@ -9,32 +9,14 @@ import {
   useState
 } from 'react';
 
+import { useCommandPalette } from '../../hooks/useCommandPalette';
+import { Option, useOptions } from '../../hooks/useOptions';
 import { cn } from '../../utils/classnames';
 
-interface Option {
-  id: number;
-  title: string;
-  icon?: ReactElement;
-  action?: () => void;
-}
-
-const options: Option[] = [
-  {
-    id: 1,
-    title: 'Project 1',
-    icon: <ArrowRight size={20} />,
-    action: () => console.log('Project 1')
-  },
-  {
-    id: 2,
-    title: 'Project 2',
-    icon: <ArrowRight size={20} />,
-    action: () => console.log('Project 2')
-  }
-];
-
 export const CommandPalette = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const options = useOptions();
+
+  const { isOpen, toggle } = useCommandPalette();
   const [query, setQuery] = useState('');
 
   const filteredOptions = query
@@ -46,17 +28,17 @@ export const CommandPalette = () => {
   useEffect(() => {
     const onKeydown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey || e.altKey) && e.key === 'k') {
-        setIsOpen(state => !state);
+        toggle();
       }
     };
 
     window.addEventListener('keydown', onKeydown);
 
     return () => window.removeEventListener('keydown', onKeydown);
-  }, [isOpen]);
+  }, [toggle]);
 
-  const handleSelection = (option: Option) => {
-    setIsOpen(false);
+  const handleSelection = async (option: Option) => {
+    toggle();
     option.action && option.action();
   };
 
@@ -67,7 +49,7 @@ export const CommandPalette = () => {
       afterLeave={() => setQuery('')}
     >
       <Dialog
-        onClose={setIsOpen}
+        onClose={toggle}
         className='fixed inset-0 overflow-y-auto p-4 pt-[25vh]'
       >
         <Transition.Child
@@ -96,29 +78,28 @@ export const CommandPalette = () => {
             <div className='flex items-center px-4'>
               <MagnifyingGlass size={24} className='text-zinc-100' />
               <Combobox.Input
-                className='w-full border-0 bg-transparent p-4 text-base text-zinc-100 placeholder:text-zinc-400 focus:ring-0'
+                className='w-full border border-b-white bg-transparent p-4 text-base text-zinc-100 placeholder:text-zinc-400 focus:ring-0'
                 placeholder='Search...'
                 onChange={e => setQuery(e.target.value)}
                 value={query}
               />
             </div>
             {filteredOptions.length > 0 && (
-              <Combobox.Options static className='max-h-96 pt-4 text-base'>
+              <Combobox.Options static className='max-h-96 py-3 text-base'>
                 {filteredOptions.map(option => (
                   <Combobox.Option key={option.id} value={option}>
                     {({ active }) => (
                       <div
-                        className={`flex items-center gap-3 p-3 ${cn(
+                        className={`mx-3 flex items-center gap-3 rounded-lg p-3 ${cn(
                           active,
                           'cursor-pointer bg-zinc-900'
                         )}`}
                       >
-                        {option.icon && (
-                          <Icon
-                            icon={option.icon}
-                            className={cn(active, 'animate-shake')}
-                          />
-                        )}
+                        <Icon
+                          icon={option.icon}
+                          className={cn(active, 'animate-shake')}
+                        />
+
                         <span
                           className={cn(active, 'text-white', 'text-zinc-400')}
                         >
@@ -144,10 +125,11 @@ export const CommandPalette = () => {
 };
 
 interface IconProps extends SVGProps<SVGSVGElement> {
-  icon: ReactElement;
+  icon?: ReactElement;
 }
 
 const Icon = ({ icon, ...props }: IconProps) => {
+  if (!icon) return null;
   const element = cloneElement(icon, { ...props });
 
   return element;
