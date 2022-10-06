@@ -5,6 +5,11 @@ import styled from 'styled-components';
 import { fadeIn, fadeOut } from '../../styles/keyframes/fade';
 import { scaleDown, scaleUp } from '../../styles/keyframes/scale';
 
+export const Title = styled(Dialog.Title)`
+  font-size: 1.5rem;
+  font-weight: bold;
+`;
+
 export const Overlay = styled(Dialog.Overlay)`
   position: fixed;
   width: 100vw;

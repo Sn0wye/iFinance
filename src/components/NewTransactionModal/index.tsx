@@ -15,6 +15,7 @@ import {
   Content,
   Error,
   Overlay,
+  Title,
   TransactionType,
   TransactionTypeButton
 } from './styles';
@@ -53,7 +54,7 @@ export const NewTransactionModal = () => {
     <Dialog.Portal>
       <Overlay />
       <Content>
-        <Dialog.Title>New Title</Dialog.Title>
+        <Title>New Transaction</Title>
 
         <Close ref={closeRef}>
           <X size={24} />
