@@ -1,19 +1,26 @@
 import { z } from 'zod';
 
 import { newTransactionInput } from '../../schemas/transaction/newTransactionInput';
-import { createRouter } from './context';
+import { createProtectedRouter } from './context';
 
-export const transactionsRouter = createRouter()
+export const transactionsRouter = createProtectedRouter()
   .query('getAll', {
     async resolve({ ctx }) {
-      return await ctx.prisma.transaction.findMany();
+      return await ctx.prisma.transaction.findMany({
+        where: {
+          userId: ctx.session.user.id
+        }
+      });
     }
   })
   .mutation('create', {
     input: newTransactionInput,
     async resolve({ input, ctx }) {
       return await ctx.prisma.transaction.create({
-        data: input
+        data: {
+          ...input,
+          userId: ctx.session.user.id
+        }
       });
     }
   })
