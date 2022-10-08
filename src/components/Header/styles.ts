@@ -30,3 +30,28 @@ export const NewTransactionButton = styled.button`
     transition: background-color 0.2s;
   }
 `;
+
+export const RightGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+export const ProfileImageWrapper = styled.div`
+  position: relative;
+  height: 3.125rem;
+  aspect-ratio: 1/1;
+  border: 4px solid transparent;
+  border-radius: 6px;
+
+  img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 9999px;
+  }
+
+  &:hover {
+    background: ${({ theme }) => theme['gray-600']};
+    transition: border 0.2s;
+  }
+`;

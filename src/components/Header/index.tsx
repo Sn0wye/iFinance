@@ -1,12 +1,18 @@
-import * as Dialog from '@radix-ui/react-dialog';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 
-import { useNewTransactionModal } from '../../hooks/useNewTransactionModal';
 import { NewTransactionModal } from '../NewTransactionModal';
-import { HeaderContainer, HeaderContent, NewTransactionButton } from './styles';
+import { ProfileSettingsPopover } from '../ProfileSettingsPopover';
+import {
+  HeaderContainer,
+  HeaderContent,
+  NewTransactionButton,
+  ProfileImageWrapper,
+  RightGroup
+} from './styles';
 
 export const Header = () => {
-  const { isOpen, toggle } = useNewTransactionModal();
+  const { data: session } = useSession();
   return (
     <HeaderContainer>
       <HeaderContent>
@@ -17,13 +23,27 @@ export const Header = () => {
           alt='DT Money'
         />
 
-        <Dialog.Root open={isOpen} onOpenChange={toggle}>
-          <Dialog.Trigger asChild>
+        <RightGroup>
+          <NewTransactionModal>
             <NewTransactionButton>New Transaction</NewTransactionButton>
-          </Dialog.Trigger>
+          </NewTransactionModal>
 
-          <NewTransactionModal />
-        </Dialog.Root>
+          <ProfileSettingsPopover>
+            <button>
+              {session && session.user && session.user.image && (
+                <ProfileImageWrapper title='Profile Settings'>
+                  <Image
+                    src={session?.user?.image}
+                    alt=''
+                    objectFit='cover'
+                    layout='fill'
+                    priority
+                  />
+                </ProfileImageWrapper>
+              )}
+            </button>
+          </ProfileSettingsPopover>
+        </RightGroup>
       </HeaderContent>
     </HeaderContainer>
   );
