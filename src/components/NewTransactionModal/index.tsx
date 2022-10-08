@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as Dialog from '@radix-ui/react-dialog';
 import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react';
-import { useRef } from 'react';
+import { PropsWithChildren } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
+import { useNewTransactionModal } from '../../hooks/useNewTransactionModal';
 import { useTransaction } from '../../hooks/useTransaction';
 import {
   newTransactionInput,
@@ -20,11 +21,13 @@ import {
   TransactionTypeButton
 } from './styles';
 
+const Root = Dialog.Root;
+const Trigger = Dialog.Trigger;
+const Portal = Dialog.Portal;
+
 const newTransactionFormSchema = newTransactionInput;
 
-export const NewTransactionModal = () => {
-  const closeRef = useRef<HTMLButtonElement>(null);
-
+export const NewTransactionModal = ({ children }: PropsWithChildren) => {
   const {
     register,
     handleSubmit,
@@ -47,62 +50,71 @@ export const NewTransactionModal = () => {
   const handleCreateNewTransaction = async (data: TNewTransactionInput) => {
     mutation.mutate(data);
     reset();
-    closeRef.current?.click();
+    toggle();
   };
 
+  const { isOpen, toggle } = useNewTransactionModal();
+
   return (
-    <Dialog.Portal>
-      <Overlay />
-      <Content>
-        <Title>New Transaction</Title>
+    <Root open={isOpen} onOpenChange={toggle}>
+      <Trigger asChild>{children}</Trigger>
+      <Portal>
+        <Overlay />
+        <Content>
+          <Title>New Transaction</Title>
 
-        <Close ref={closeRef}>
-          <X size={24} />
-        </Close>
+          <Close>
+            <X size={24} />
+          </Close>
 
-        <form onSubmit={handleSubmit(handleCreateNewTransaction)}>
-          <input
-            type='text'
-            placeholder='Description'
-            {...register('description')}
-          />
+          <form onSubmit={handleSubmit(handleCreateNewTransaction)}>
+            <input
+              type='text'
+              placeholder='Description'
+              {...register('description')}
+            />
 
-          {errors.description && <Error>{errors.description.message}</Error>}
-          <input
-            type='number'
-            placeholder='Amount'
-            {...register('amount', { valueAsNumber: true })}
-          />
-          {errors.amount && <Error>{errors.amount.message}</Error>}
+            {errors.description && <Error>{errors.description.message}</Error>}
+            <input
+              type='number'
+              placeholder='Amount'
+              {...register('amount', { valueAsNumber: true })}
+            />
+            {errors.amount && <Error>{errors.amount.message}</Error>}
 
-          <input type='text' placeholder='Category' {...register('category')} />
-          {errors.category && <Error>{errors.category.message}</Error>}
+            <input
+              type='text'
+              placeholder='Category'
+              {...register('category')}
+            />
+            {errors.category && <Error>{errors.category.message}</Error>}
 
-          <Controller
-            control={control}
-            name='type'
-            render={({ field }) => (
-              <TransactionType
-                onValueChange={field.onChange}
-                value={field.value}
-              >
-                <TransactionTypeButton variant='income' value='income'>
-                  <ArrowCircleUp size={24} />
-                  Income
-                </TransactionTypeButton>
-                <TransactionTypeButton variant='outcome' value='outcome'>
-                  <ArrowCircleDown size={24} />
-                  Outcome
-                </TransactionTypeButton>
-              </TransactionType>
-            )}
-          />
+            <Controller
+              control={control}
+              name='type'
+              render={({ field }) => (
+                <TransactionType
+                  onValueChange={field.onChange}
+                  value={field.value}
+                >
+                  <TransactionTypeButton variant='income' value='income'>
+                    <ArrowCircleUp size={24} />
+                    Income
+                  </TransactionTypeButton>
+                  <TransactionTypeButton variant='outcome' value='outcome'>
+                    <ArrowCircleDown size={24} />
+                    Outcome
+                  </TransactionTypeButton>
+                </TransactionType>
+              )}
+            />
 
-          <button type='submit' disabled={isSubmitting}>
-            Create
-          </button>
-        </form>
-      </Content>
-    </Dialog.Portal>
+            <button type='submit' disabled={isSubmitting}>
+              Create
+            </button>
+          </form>
+        </Content>
+      </Portal>
+    </Root>
   );
 };
