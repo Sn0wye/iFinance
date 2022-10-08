@@ -1,4 +1,7 @@
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { Cardholder } from 'phosphor-react';
+import { useEffect } from 'react';
 
 import { Header } from '../components/Header';
 import { SearchForm } from '../components/SearchForm';
@@ -9,6 +12,14 @@ import { trpc } from '../utils/trpc';
 
 const Dashboard = () => {
   const { setTransactions, transactions } = useTransaction();
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!session) {
+      router.push('/');
+    }
+  }, [router, session]);
 
   trpc.useQuery(['transactions.getAll'], {
     onSuccess: data => setTransactions(data),
