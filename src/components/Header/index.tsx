@@ -16,12 +16,7 @@ export const Header = () => {
   return (
     <HeaderContainer>
       <HeaderContent>
-        <Image
-          width={64}
-          height={64}
-          src='/img/logo-64x64.svg'
-          alt='DT Money'
-        />
+        <Image width={36} height={36} src='/logo.svg' alt='DT Money' />
 
         <RightGroup>
           <NewTransactionModal>
