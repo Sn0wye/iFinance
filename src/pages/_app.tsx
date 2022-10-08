@@ -2,6 +2,7 @@
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
 import { withTRPC } from '@trpc/next';
+import { KBarProvider } from 'kbar';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import type { AppType } from 'next/app';
@@ -10,6 +11,7 @@ import { ThemeProvider } from 'styled-components';
 import superjson from 'superjson';
 
 import { CommandPalette } from '../components/CommandPalette';
+import { useActions } from '../hooks/useActions';
 import type { AppRouter } from '../server/router';
 import { GlobalStyle } from '../styles/global';
 import '../styles/globals.css';
@@ -19,6 +21,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps }
 }) => {
+  const actions = useActions();
+
   return (
     <>
       <Head>
@@ -27,9 +31,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
 
       <SessionProvider session={session}>
         <ThemeProvider theme={defaultTheme}>
-          <GlobalStyle />
-          <CommandPalette />
-          <Component {...pageProps} />
+          <KBarProvider actions={actions}>
+            <GlobalStyle />
+            <CommandPalette />
+            <Component {...pageProps} />
+          </KBarProvider>
         </ThemeProvider>
       </SessionProvider>
     </>
