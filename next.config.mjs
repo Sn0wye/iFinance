@@ -17,5 +17,8 @@ export default defineNextConfig({
   i18n: {
     locales: ['en'],
     defaultLocale: 'en'
+  },
+  images: {
+    domains: ['avatars.githubusercontent.com']
   }
 });
