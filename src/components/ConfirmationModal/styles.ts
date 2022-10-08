@@ -1,6 +1,9 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import styled from 'styled-components';
 
+import { fadeIn, fadeOut } from '../../styles/keyframes/fade';
+import { scaleDown, scaleUp } from '../../styles/keyframes/scale';
+
 export const Title = styled(Dialog.Title)`
   color: ${({ theme }) => theme.white};
   font-weight: 700;
@@ -42,6 +45,13 @@ export const Overlay = styled(Dialog.Overlay)`
   height: 100vh;
   inset: 0;
   background: rgba(0, 0, 0, 0.75);
+
+  &[data-state='open'] {
+    animation: ${fadeIn} 0.3s ease-out;
+  }
+  &[data-state='closed'] {
+    animation: ${fadeOut} 0.2s ease-in;
+  }
 `;
 
 export const Close = styled(Dialog.Close)`
@@ -69,4 +79,11 @@ export const Content = styled(Dialog.Content)`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+
+  &[data-state='open'] {
+    animation: ${fadeIn}, ${scaleUp} 0.3s ease-out;
+  }
+  &[data-state='closed'] {
+    animation: ${fadeOut}, ${scaleDown} 0.2s ease-in;
+  }
 `;
