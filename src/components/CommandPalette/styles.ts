@@ -69,6 +69,7 @@ export const ResultItemStyle = styled.div<ResultItemStyleProps>`
   gap: 0.75rem;
   padding: 0.75rem;
   color: ${({ theme }) => theme['gray-400']};
+  border-left: 2px solid transparent;
 
   ${({ active }) =>
     active &&
