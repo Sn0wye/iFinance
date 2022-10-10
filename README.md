@@ -17,5 +17,6 @@ With this finance app, I aspire to achieve the point where you can track you gai
 - [ ] Mobile view
 - [ ] Category based organization
 - [ ] Monthly based organization
+- [ ] Recurring expenses
 
 
