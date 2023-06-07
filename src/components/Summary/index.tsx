@@ -20,11 +20,11 @@ export const Summary = () => {
 
       <SummaryCard>
         <header>
-          <span>Outcomes</span>
+          <span>Expenses</span>
           <ArrowCircleDown size={32} color='#f75a68' />
         </header>
 
-        <strong>{priceFormatter.format(summary.outcome)}</strong>
+        <strong>{priceFormatter.format(summary.expense)}</strong>
       </SummaryCard>
 
       <SummaryCard variant='green'>

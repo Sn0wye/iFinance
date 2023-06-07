@@ -8,18 +8,18 @@ export const useSummary = () => {
   const summary = useMemo(() => {
     return transactions.reduce(
       (acc, transaction) => {
-        if (transaction.type === 'income') {
+        if (transaction.type === 'INCOME') {
           acc.income += transaction.amount;
           acc.total += transaction.amount;
         } else {
-          acc.outcome += transaction.amount;
+          acc.expense += transaction.amount;
           acc.total -= transaction.amount;
         }
         return acc;
       },
       {
         income: 0,
-        outcome: 0,
+        expense: 0,
         total: 0
       }
     );

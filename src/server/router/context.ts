@@ -1,7 +1,8 @@
 // src/server/router/context.ts
-import * as trpc from '@trpc/server';
-import * as trpcNext from '@trpc/server/adapters/next';
+import { initTRPC, TRPCError } from '@trpc/server';
+import { CreateNextContextOptions } from '@trpc/server/adapters/next';
 import { Session } from 'next-auth';
+import superjson from 'superjson';
 
 import { getServerAuthSession } from '../../server/common/get-server-auth-session';
 import { prisma } from '../db/client';
@@ -25,9 +26,7 @@ export const createContextInner = async (opts: CreateContextOptions) => {
  * This is the actual context you'll use in your router
  * @link https://trpc.io/docs/context
  **/
-export const createContext = async (
-  opts: trpcNext.CreateNextContextOptions
-) => {
+export const createContext = async (opts: CreateNextContextOptions) => {
   const { req, res } = opts;
 
   // Get the session from the server using the unstable_getServerSession wrapper function
@@ -38,24 +37,31 @@ export const createContext = async (
   });
 };
 
-type Context = trpc.inferAsyncReturnType<typeof createContext>;
+const t = initTRPC.context<typeof createContext>().create({
+  transformer: superjson,
+  errorFormatter({ shape }) {
+    return shape;
+  }
+});
 
-export const createRouter = () => trpc.router<Context>();
+export const router = t.router;
+export const publicProcedure = t.procedure;
 
-/**
- * Creates a tRPC router that asserts all queries and mutations are from an authorized user. Will throw an unauthorized error if a user is not signed in.
- **/
-export function createProtectedRouter() {
-  return createRouter().middleware(({ ctx, next }) => {
-    if (!ctx.session || !ctx.session.user) {
-      throw new trpc.TRPCError({ code: 'UNAUTHORIZED' });
-    }
-    return next({
-      ctx: {
-        ...ctx,
-        // infers that `session` is non-nullable to downstream resolvers
-        session: { ...ctx.session, user: ctx.session.user }
-      }
+const enforceUserIsAuthenticated = t.middleware(({ ctx, next }) => {
+  if (!ctx.session) {
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'Not authenticated'
     });
+  }
+
+  return next({
+    ctx: {
+      session: ctx.session
+    }
   });
-}
+});
+
+export const protectedProcedure = publicProcedure.use(
+  enforceUserIsAuthenticated
+);

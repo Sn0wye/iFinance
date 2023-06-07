@@ -2,7 +2,6 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import NextAuth, { type NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 
-// eslint-disable-next-line import-helpers/order-imports
 import { env } from '../../../env/server.mjs';
 
 // Prisma adapter for NextAuth, optional and can be removed

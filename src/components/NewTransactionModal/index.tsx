@@ -10,7 +10,7 @@ import {
   newTransactionInput,
   TNewTransactionInput
 } from '../../schemas/transaction/newTransactionInput';
-import { trpc } from '../../utils/trpc';
+import { api } from '../../utils/api';
 import {
   Close,
   Content,
@@ -37,13 +37,13 @@ export const NewTransactionModal = ({ children }: PropsWithChildren) => {
   } = useForm<TNewTransactionInput>({
     resolver: zodResolver(newTransactionFormSchema),
     defaultValues: {
-      type: 'income'
+      type: 'INCOME'
     }
   });
 
   const { createTransaction } = useTransaction();
 
-  const mutation = trpc.useMutation(['transactions.create'], {
+  const mutation = api.transactions.create.useMutation({
     onSuccess: data => createTransaction(data)
   });
 
@@ -97,13 +97,13 @@ export const NewTransactionModal = ({ children }: PropsWithChildren) => {
                   onValueChange={field.onChange}
                   value={field.value}
                 >
-                  <TransactionTypeButton variant='income' value='income'>
+                  <TransactionTypeButton variant='INCOME' value='INCOME'>
                     <ArrowCircleUp size={24} />
                     Income
                   </TransactionTypeButton>
-                  <TransactionTypeButton variant='outcome' value='outcome'>
+                  <TransactionTypeButton variant='EXPENSE' value='EXPENSE'>
                     <ArrowCircleDown size={24} />
-                    Outcome
+                    Expense
                   </TransactionTypeButton>
                 </TransactionType>
               )}

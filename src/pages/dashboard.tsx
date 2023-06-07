@@ -8,7 +8,7 @@ import { SearchForm } from '../components/SearchForm';
 import { Summary } from '../components/Summary';
 import { TransactionsTable } from '../components/TransactionsTable';
 import { useTransaction } from '../hooks/useTransaction';
-import { trpc } from '../utils/trpc';
+import { api } from '../utils/api';
 
 const Dashboard = () => {
   const { setTransactions, transactions } = useTransaction();
@@ -21,7 +21,7 @@ const Dashboard = () => {
     }
   }, [router, session]);
 
-  trpc.useQuery(['transactions.getAll'], {
+  api.transactions.getAll.useQuery(undefined, {
     onSuccess: data => setTransactions(data),
     refetchOnWindowFocus: false
   });

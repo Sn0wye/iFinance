@@ -2,8 +2,8 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { TrashSimple } from 'phosphor-react';
 
 import { useTransaction } from '../../hooks/useTransaction';
+import { api } from '../../utils/api';
 import { dateFormatter, priceFormatter } from '../../utils/formatter';
-import { trpc } from '../../utils/trpc';
 import { ConfirmationModal } from '../ConfirmationModal';
 import { DeleteButton, PriceHighlight, TableContainer } from './styles';
 
@@ -11,12 +11,12 @@ export const TransactionsTable = () => {
   const { filteredTransactions } = useTransaction();
 
   const { deleteTransaction } = useTransaction();
-  const deleteMutation = trpc.useMutation('transactions.delete', {
+  const deleteMutation = api.transactions.delete.useMutation({
     onSuccess: deletedTransaction => deleteTransaction(deletedTransaction)
   });
 
   const handleDeleteTransaction = (transactionId: string) => {
-    deleteMutation.mutate(transactionId);
+    deleteMutation.mutate({ id: transactionId });
   };
 
   return (
@@ -26,10 +26,8 @@ export const TransactionsTable = () => {
           <tr key={transaction.id}>
             <td width='50%'>{transaction.description}</td>
             <td>
-              <PriceHighlight
-                variant={transaction.type === 'income' ? 'income' : 'outcome'}
-              >
-                {transaction.type === 'outcome' && '- '}
+              <PriceHighlight variant={transaction.type}>
+                {transaction.type === 'EXPENSE' && '- '}
                 {priceFormatter.format(transaction.amount)}
               </PriceHighlight>
             </td>

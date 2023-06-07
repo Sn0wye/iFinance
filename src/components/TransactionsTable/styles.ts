@@ -24,12 +24,12 @@ export const TableContainer = styled.table`
 `;
 
 interface PriceHighlightProps {
-  variant: 'income' | 'outcome';
+  variant: 'INCOME' | 'EXPENSE';
 }
 
 export const PriceHighlight = styled.span<PriceHighlightProps>`
   color: ${({ variant, theme }) =>
-    variant === 'income' ? theme['green-300'] : theme['red-300']};
+    variant === 'INCOME' ? theme['green-300'] : theme['red-300']};
 `;
 
 export const DeleteButton = styled(Dialog.Trigger)`
