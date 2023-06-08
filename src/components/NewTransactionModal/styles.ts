@@ -55,7 +55,7 @@ export const Content = styled(Dialog.Content)`
 
     button[type='submit'] {
       height: 58px;
-      background: ${({ theme }) => theme['green-500']};
+      background: ${({ theme }) => theme['brand-500']};
       color: ${({ theme }) => theme.white};
       font-weight: bold;
       padding: 0 1.25rem;
@@ -64,7 +64,7 @@ export const Content = styled(Dialog.Content)`
       cursor: pointer;
 
       &:not(:disabled):hover {
-        background: ${({ theme }) => theme['green-700']};
+        background: ${({ theme }) => theme['brand-700']};
         transition: background-color 0.2s;
       }
 
@@ -119,7 +119,7 @@ export const TransactionTypeButton = styled(
 
   svg {
     color: ${({ variant, theme }) =>
-      variant === 'INCOME' ? theme['green-300'] : theme['red-300']};
+      variant === 'INCOME' ? theme['brand-300'] : theme['red-300']};
   }
 
   &[data-state='unchecked']:hover {
@@ -130,7 +130,7 @@ export const TransactionTypeButton = styled(
   &[data-state='checked'] {
     color: ${({ theme }) => theme.white};
     background: ${({ variant, theme }) =>
-      variant === 'INCOME' ? theme['green-500'] : theme['red-500']};
+      variant === 'INCOME' ? theme['brand-500'] : theme['red-500']};
 
     svg {
       color: ${({ theme }) => theme.white};

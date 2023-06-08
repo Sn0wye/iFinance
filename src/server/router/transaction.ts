@@ -7,7 +7,7 @@ export const transactionRouter = router({
   getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.transaction.findMany({
       where: {
-        userId: ctx.session.user.id
+        userId: ctx.auth.userId
       }
     });
   }),
@@ -17,7 +17,7 @@ export const transactionRouter = router({
       return ctx.prisma.transaction.create({
         data: {
           ...input,
-          userId: ctx.session.user.id
+          userId: ctx.auth.userId
         }
       });
     }),

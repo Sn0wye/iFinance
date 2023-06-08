@@ -1,11 +1,13 @@
 import { Action } from 'kbar';
-import { signOut } from 'next-auth/react';
 import { Cardholder, SignOut } from 'phosphor-react';
 
 import { useNewTransactionModal } from './useNewTransactionModal';
+// import { useClerk } from '@clerk/nextjs';
 
 export const useActions = () => {
   const { toggle: newTransactionModal } = useNewTransactionModal();
+
+  // const { signOut } = useClerk();
 
   const actions: Action[] = [
     {
@@ -20,7 +22,7 @@ export const useActions = () => {
       id: 'signout',
       name: 'Sign out',
       icon: <SignOut size={20} />,
-      perform: () => signOut(),
+      // perform: () => signOut(),
       section: 'Account'
     }
   ];

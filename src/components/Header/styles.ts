@@ -18,7 +18,7 @@ export const HeaderContent = styled.div`
 
 export const NewTransactionButton = styled.button`
   height: 50px;
-  background: ${({ theme }) => theme['green-500']};
+  background: ${({ theme }) => theme['brand-500']};
   color: ${({ theme }) => theme.white};
   font-weight: bold;
   padding: 0 1.25rem;
@@ -26,7 +26,7 @@ export const NewTransactionButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background: ${({ theme }) => theme['green-700']};
+    background: ${({ theme }) => theme['brand-700']};
     transition: background-color 0.2s;
   }
 `;
@@ -35,23 +35,4 @@ export const RightGroup = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-`;
-
-export const ProfileImageWrapper = styled.div`
-  position: relative;
-  height: 3.125rem;
-  aspect-ratio: 1/1;
-  border: 4px solid transparent;
-  border-radius: 6px;
-
-  img {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 9999px;
-  }
-
-  &:hover {
-    background: ${({ theme }) => theme['gray-600']};
-    transition: border 0.2s;
-  }
 `;

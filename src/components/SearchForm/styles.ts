@@ -23,14 +23,14 @@ export const SearchFormContainer = styled.form`
 
     padding: 1rem;
     background: transparent;
-    border: 1px solid ${({ theme }) => theme['green-300']};
-    color: ${({ theme }) => theme['green-300']};
+    border: 1px solid ${({ theme }) => theme['brand-300']};
+    color: ${({ theme }) => theme['brand-300']};
     border-radius: 6px;
     cursor: pointer;
 
     &:not(:disabled):hover {
-      background: ${({ theme }) => theme['green-500']};
-      border-color: ${({ theme }) => theme['green-500']};
+      background: ${({ theme }) => theme['brand-500']};
+      border-color: ${({ theme }) => theme['brand-500']};
       color: ${({ theme }) => theme.white};
       transition: background-color 0.2s, color 0.2s, border-color 0.2s;
     }

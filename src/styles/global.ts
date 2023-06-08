@@ -13,7 +13,7 @@ export const GlobalStyle = createGlobalStyle`
 
   :focus {
     outline: 0;
-    box-shadow: 0 0 0 2px ${({ theme }) => theme['green-500']};
+    box-shadow: 0 0 0 2px ${({ theme }) => theme['brand-500']};
   }
 
   body {

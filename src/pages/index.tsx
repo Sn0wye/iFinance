@@ -1,11 +1,19 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import { GithubLogo, List, Snowflake } from 'phosphor-react';
+import { Github, Snowflake, Menu } from 'lucide-react';
 
-import { LoginModal } from '../components/LoginModal';
+import { useClerk } from '@clerk/nextjs';
+import { useRouter } from 'next/router';
 
 const Home: NextPage = () => {
+  const { openSignIn, user } = useClerk();
+  const router = useRouter();
+
+  if (user) {
+    router.push('/dashboard');
+  }
+
   return (
     <>
       <div className='flex flex-col justify-between'>
@@ -17,7 +25,7 @@ const Home: NextPage = () => {
               target='_blank'
               rel='noreferrer'
             >
-              <GithubLogo size={20} weight='bold' />
+              <Github size={20} />
             </a>
 
             <a
@@ -26,7 +34,7 @@ const Home: NextPage = () => {
               target='_blank'
               rel='noreferrer'
             >
-              <Snowflake size={20} weight='bold' />
+              <Snowflake size={20} />
             </a>
           </div>
           <div className='flex items-center gap-4'>
@@ -41,7 +49,7 @@ const Home: NextPage = () => {
             </span>
           </div>
 
-          <List
+          <Menu
             size={34}
             className='cursor-pointer text-brand-500 hover:text-white'
           />
@@ -57,14 +65,17 @@ const Home: NextPage = () => {
               your money. So you can relax, have fun and turn your dreams
               possible.
             </p>
-            <Dialog.Root>
-              <Dialog.Trigger asChild>
-                <button className='mt-16 select-none rounded-lg border-2 border-solid border-black bg-brand-500 px-8 py-4 font-overpass text-2xl font-semibold shadow-[4px_4px_0_0_#000] transition-all  duration-200 ease-linear focus:shadow-none active:translate-x-1 active:translate-y-1 active:shadow-none'>
-                  Join us
-                </button>
-              </Dialog.Trigger>
-              <LoginModal />
-            </Dialog.Root>
+
+            <button
+              onClick={() =>
+                openSignIn({
+                  afterSignInUrl: '/dashboard'
+                })
+              }
+              className='mt-16 select-none rounded-lg border-2 border-solid border-black bg-brand-500 px-8 py-4 font-overpass text-2xl font-semibold shadow-[4px_4px_0_0_#000] transition-all  duration-200 ease-linear focus:shadow-none active:translate-x-1 active:translate-y-1 active:shadow-none'
+            >
+              Join us
+            </button>
           </section>
           <aside className='h-full w-auto'>
             <Image

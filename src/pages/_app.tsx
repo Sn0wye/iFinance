@@ -3,9 +3,8 @@ import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
 import { withTRPC } from '@trpc/next';
 import { KBarProvider } from 'kbar';
-import type { Session } from 'next-auth';
-import { SessionProvider } from 'next-auth/react';
 import type { AppType } from 'next/app';
+import { ClerkProvider } from '@clerk/nextjs';
 import Head from 'next/head';
 import { ThemeProvider } from 'styled-components';
 import superjson from 'superjson';
@@ -17,10 +16,7 @@ import { GlobalStyle } from '../styles/global';
 import '../styles/globals.css';
 import { defaultTheme } from '../styles/themes/default';
 
-const MyApp: AppType<{ session: Session | null }> = ({
-  Component,
-  pageProps: { session, ...pageProps }
-}) => {
+const MyApp: AppType = ({ Component, ...pageProps }) => {
   const actions = useActions();
 
   return (
@@ -29,7 +25,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <title>iFinance</title>
       </Head>
 
-      <SessionProvider session={session}>
+      <ClerkProvider {...pageProps}>
         <ThemeProvider theme={defaultTheme}>
           <KBarProvider actions={actions}>
             <GlobalStyle />
@@ -37,7 +33,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
             <Component {...pageProps} />
           </KBarProvider>
         </ThemeProvider>
-      </SessionProvider>
+      </ClerkProvider>
     </>
   );
 };

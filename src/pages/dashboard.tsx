@@ -1,7 +1,4 @@
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import { Cardholder } from 'phosphor-react';
-import { useEffect } from 'react';
 
 import { Header } from '../components/Header';
 import { SearchForm } from '../components/SearchForm';
@@ -9,17 +6,10 @@ import { Summary } from '../components/Summary';
 import { TransactionsTable } from '../components/TransactionsTable';
 import { useTransaction } from '../hooks/useTransaction';
 import { api } from '../utils/api';
+import { RedirectToSignIn, SignedOut } from '@clerk/nextjs';
 
 const Dashboard = () => {
   const { setTransactions, transactions } = useTransaction();
-  const { data: session } = useSession();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!session) {
-      router.push('/');
-    }
-  }, [router, session]);
 
   api.transactions.getAll.useQuery(undefined, {
     onSuccess: data => setTransactions(data),
@@ -30,6 +20,10 @@ const Dashboard = () => {
     <div>
       <Header />
       <Summary />
+
+      <SignedOut>
+        <RedirectToSignIn />
+      </SignedOut>
 
       <main className='mx-auto mt-16 w-full max-w-[1120px] px-6'>
         <SearchForm />

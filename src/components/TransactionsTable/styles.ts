@@ -29,7 +29,7 @@ interface PriceHighlightProps {
 
 export const PriceHighlight = styled.span<PriceHighlightProps>`
   color: ${({ variant, theme }) =>
-    variant === 'INCOME' ? theme['green-300'] : theme['red-300']};
+    variant === 'INCOME' ? theme['brand-300'] : theme['red-300']};
 `;
 
 export const DeleteButton = styled(Dialog.Trigger)`
