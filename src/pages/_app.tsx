@@ -11,7 +11,7 @@ import superjson from 'superjson';
 
 import { CommandPalette } from '../components/CommandPalette';
 import { useActions } from '../hooks/useActions';
-import type { AppRouter } from '../server/router';
+import type { RootRouter } from '../server/routers/root';
 import { GlobalStyle } from '../styles/global';
 import '../styles/globals.css';
 import { defaultTheme } from '../styles/themes/default';
@@ -44,7 +44,7 @@ const getBaseUrl = () => {
   return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 };
 
-export default withTRPC<AppRouter>({
+export default withTRPC<RootRouter>({
   config({ ctx }) {
     /**
      * If you want to use SSR, you need to use the server's full URL

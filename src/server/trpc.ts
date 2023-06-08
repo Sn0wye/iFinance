@@ -8,7 +8,7 @@ import {
 } from '@clerk/nextjs/api';
 import { getAuth } from '@clerk/nextjs/server';
 
-import { prisma } from '../db/client';
+import { prisma } from './db';
 import { ZodError } from 'zod';
 
 type CreateContextOptions = {

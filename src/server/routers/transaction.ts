@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { newTransactionInput } from '../../schemas/transaction/newTransactionInput';
-import { protectedProcedure, router } from './context';
+import { protectedProcedure, router } from '../trpc';
 
 export const transactionRouter = router({
   getAll: protectedProcedure.query(({ ctx }) => {
