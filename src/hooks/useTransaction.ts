@@ -1,5 +1,5 @@
 import { Transaction } from '@prisma/client';
-import create from 'zustand';
+import { create } from 'zustand';
 
 interface TransactionsContext {
   transactions: Transaction[];

@@ -80,8 +80,10 @@ const Home: NextPage = () => {
         <div className='fixed inset-0 -z-10 h-screen w-screen'>
           <Image
             src='/home/mask.svg'
-            objectFit='cover'
-            layout='fill'
+            style={{
+              objectFit: 'cover'
+            }}
+            fill
             alt=''
             priority
           />
