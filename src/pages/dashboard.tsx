@@ -11,7 +11,7 @@ import { RedirectToSignIn, SignedOut } from '@clerk/nextjs';
 const Dashboard = () => {
   const { setTransactions, transactions } = useTransaction();
 
-  api.transactions.getAll.useQuery(undefined, {
+  const data = api.transactions.getAll.useQuery(undefined, {
     onSuccess: data => setTransactions(data),
     refetchOnWindowFocus: false
   });

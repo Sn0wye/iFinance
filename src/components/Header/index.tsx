@@ -10,11 +10,20 @@ import {
 import { UserButton, useUser } from '@clerk/nextjs';
 
 export const Header = () => {
-  const { user } = useUser();
+  // const { user } = useUser();
   return (
     <HeaderContainer>
       <HeaderContent>
-        <Image width={36} height={36} src='/logo.svg' alt='iFinance logo' />
+        <Image
+          width={36}
+          height={36}
+          style={{
+            width: '36px',
+            height: '36px'
+          }}
+          src='/logo.svg'
+          alt='iFinance logo'
+        />
 
         <RightGroup>
           <NewTransactionModal>

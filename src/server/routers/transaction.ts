@@ -4,8 +4,9 @@ import { newTransactionInput } from '../../schemas/transaction/newTransactionInp
 import { protectedProcedure, router } from '../trpc';
 
 export const transactionRouter = router({
-  getAll: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.transaction.findMany({
+  getAll: protectedProcedure.query(async ({ ctx }) => {
+    console.log(ctx.auth);
+    return await ctx.prisma.transaction.findMany({
       where: {
         userId: ctx.auth.userId
       }

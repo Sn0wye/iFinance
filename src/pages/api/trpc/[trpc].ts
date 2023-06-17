@@ -5,7 +5,6 @@ import { env } from '~/env.mjs';
 import { rootRouter } from '../../../server/routers/root';
 import { createTRPCContext } from '~/server/trpc';
 
-// export API handler
 export default createNextApiHandler({
   router: rootRouter,
   createContext: createTRPCContext,

@@ -5,6 +5,7 @@ import { Github, Snowflake, Menu } from 'lucide-react';
 
 import { useClerk } from '@clerk/nextjs';
 import { useRouter } from 'next/router';
+import { api } from '~/utils/api';
 
 const Home: NextPage = () => {
   const { openSignIn, user } = useClerk();
