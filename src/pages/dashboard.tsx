@@ -1,17 +1,17 @@
 import { Cardholder } from 'phosphor-react';
-
-import { Header } from '../components/Header';
-import { SearchForm } from '../components/SearchForm';
-import { Summary } from '../components/Summary';
-import { TransactionsTable } from '../components/TransactionsTable';
+import { Header } from '~/components/Header';
+import { SearchForm } from '~/components/SearchForm';
+import { Summary } from '~/components/Summary';
+import { TransactionsTable } from '~/components/TransactionsTable';
 import { useTransaction } from '../hooks/useTransaction';
 import { api } from '../utils/api';
 import { RedirectToSignIn, SignedOut } from '@clerk/nextjs';
+import { Loader2 } from 'lucide-react';
 
 const Dashboard = () => {
   const { setTransactions, transactions } = useTransaction();
 
-  const data = api.transactions.getAll.useQuery(undefined, {
+  const { data, isLoading } = api.transactions.getAll.useQuery(undefined, {
     onSuccess: data => setTransactions(data),
     refetchOnWindowFocus: false
   });
@@ -27,8 +27,15 @@ const Dashboard = () => {
 
       <div className='mx-auto mt-16 w-full max-w-[1120px] px-6'>
         <SearchForm />
-        <TransactionsTable />
-        {transactions.length === 0 && <NoTransactions />}
+
+        {isLoading ? (
+          <div className='flex h-[300px] w-full items-center justify-center'>
+            <Loader2 className='h-6 w-6 animate-spin' />
+          </div>
+        ) : (
+          <TransactionsTable />
+        )}
+        {!isLoading && transactions.length === 0 && <NoTransactions />}
       </div>
     </div>
   );

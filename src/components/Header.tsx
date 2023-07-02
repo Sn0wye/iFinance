@@ -2,6 +2,7 @@ import Image from 'next/image';
 
 import { UserButton } from '@clerk/nextjs';
 import { NewTransactionModal } from './NewTransactionModal';
+import { Button } from './ui/button';
 
 export const Header = () => {
   return (
@@ -19,9 +20,7 @@ export const Header = () => {
         />
         <div className='flex items-center gap-2'>
           <NewTransactionModal>
-            <button className='h-[50px] cursor-pointer rounded-md bg-emerald-500 px-5 font-bold text-white transition-colors hover:bg-emerald-700'>
-              New Transaction
-            </button>
+            <Button>New Transaction</Button>
           </NewTransactionModal>
           <UserButton
             afterSignOutUrl='/'

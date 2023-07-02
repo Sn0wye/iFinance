@@ -9,6 +9,7 @@ import '../styles/globals.css';
 import { api } from '~/utils/api';
 import { cn } from '~/utils/cn';
 import { Roboto, Overpass } from 'next/font/google';
+import { Toaster } from '~/components/ui/toaster';
 
 export const roboto = Roboto({
   subsets: ['latin'],
@@ -45,6 +46,7 @@ const MyApp: AppType = ({ Component, ...pageProps }) => {
           <Component {...pageProps} />
         </main>
         {/* </KBarProvider> */}
+        <Toaster />
       </ClerkProvider>
     </>
   );

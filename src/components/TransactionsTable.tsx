@@ -1,22 +1,37 @@
-import * as Dialog from '@radix-ui/react-dialog';
 import { TrashSimple } from 'phosphor-react';
 
 import { useTransaction } from '~/hooks/useTransaction';
 import { api } from '~/utils/api';
 import { dateFormatter, priceFormatter } from '~/utils/formatter';
 import { Confirm } from './ui/confirm';
+import { useToast } from './ui/use-toast';
 
 export const TransactionsTable = () => {
   const { filteredTransactions } = useTransaction();
 
   const { deleteTransaction } = useTransaction();
-  const deleteMutation = api.transactions.delete.useMutation({
-    onSuccess: deletedTransaction => deleteTransaction(deletedTransaction)
-  });
+  const utils = api.useContext();
+  const { toast } = useToast();
 
-  const handleDeleteTransaction = (transactionId: string) => {
-    deleteMutation.mutate({ id: transactionId });
-  };
+  const { mutate, isLoading } = api.transactions.delete.useMutation({
+    onSuccess: deletedTransaction => deleteTransaction(deletedTransaction),
+    async onMutate(deletedTransaction) {
+      await utils.transactions.getAll.cancel();
+      const prevData = utils.transactions.getAll.getData();
+      utils.transactions.getAll.setData(undefined, old => {
+        return old?.filter(
+          transaction => transaction.id !== deletedTransaction.id
+        );
+      });
+      return { prevData };
+    },
+    onError(err, _newPost, ctx) {
+      utils.transactions.getAll.setData(undefined, ctx?.prevData);
+    },
+    onSettled() {
+      utils.transactions.getAll.invalidate();
+    }
+  });
 
   return (
     <table className='table'>
@@ -43,8 +58,12 @@ export const TransactionsTable = () => {
                 title='Delete Transaction'
                 description='Are you sure you want to delete this transaction?'
                 confirmMessage='Yes, delete'
-                onConfirm={() => handleDeleteTransaction(transaction.id)}
-                isLoading={deleteMutation.isLoading}
+                onConfirm={() =>
+                  mutate({
+                    id: transaction.id
+                  })
+                }
+                isLoading={isLoading}
               >
                 <button className='rounded p-2 leading-none text-red-500 transition-colors hover:bg-zinc-900'>
                   <TrashSimple size={20} />
