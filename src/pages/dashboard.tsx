@@ -25,11 +25,11 @@ const Dashboard = () => {
         <RedirectToSignIn />
       </SignedOut>
 
-      <main className='mx-auto mt-16 w-full max-w-[1120px] px-6'>
+      <div className='mx-auto mt-16 w-full max-w-[1120px] px-6'>
         <SearchForm />
         <TransactionsTable />
         {transactions.length === 0 && <NoTransactions />}
-      </main>
+      </div>
     </div>
   );
 };

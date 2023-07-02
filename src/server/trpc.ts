@@ -35,9 +35,8 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  * process every request that goes through your tRPC endpoint
  * @link https://trpc.io/docs/context
  */
-export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-  const auth = await getAuth(opts.req);
-  console.log(auth);
+export const createTRPCContext = (opts: CreateNextContextOptions) => {
+  const auth = getAuth(opts.req);
 
   return createInnerTRPCContext({
     auth
@@ -90,8 +89,6 @@ export const publicProcedure = t.procedure;
  * procedure
  */
 const isAuthed = t.middleware(({ next, ctx }) => {
-  console.log('ctx.auth', ctx.auth);
-
   if (!ctx.auth.userId) {
     throw new TRPCError({ code: 'UNAUTHORIZED' });
   }

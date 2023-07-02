@@ -1,7 +1,14 @@
 import { KBarAnimator, KBarPositioner, KBarSearch } from 'kbar';
 import styled, { css } from 'styled-components';
 
-import { shake } from '../../styles/keyframes/shake';
+export const shake = keyframes`
+  0%, 100% {
+    transform: 'rotate(0deg)'
+  }
+  50% {
+    transform: 'rotate(18deg)'
+  }
+`;
 
 export const Positioner = styled(KBarPositioner)`
   position: fixed;

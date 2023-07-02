@@ -3,8 +3,7 @@ import { MagnifyingGlass } from 'phosphor-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { useTransaction } from '../../hooks/useTransaction';
-import { SearchFormContainer } from './styles';
+import { useTransaction } from '../hooks/useTransaction';
 
 const searchFormSchema = z.object({
   query: z.string()
@@ -29,16 +28,21 @@ export const SearchForm = () => {
   };
 
   return (
-    <SearchFormContainer onSubmit={handleSubmit(handleSearch)}>
+    <form className='flex gap-4' onSubmit={handleSubmit(handleSearch)}>
       <input
+        className='placeholder:color-zinc-500 flex-1 rounded-md bg-zinc-950 p-4 text-zinc-300'
         type='text'
         placeholder='Search for a transaction'
         {...register('query')}
       />
-      <button type='submit' disabled={isSubmitting}>
+      <button
+        className='flex cursor-pointer items-center gap-3 rounded-md border border-emerald-300 bg-transparent p-4 text-emerald-300 transition-colors hover:border-emerald-500 hover:bg-emerald-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-70'
+        type='submit'
+        disabled={isSubmitting}
+      >
         <MagnifyingGlass size={20} />
         Search
       </button>
-    </SearchFormContainer>
+    </form>
   );
 };
