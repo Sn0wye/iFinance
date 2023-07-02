@@ -50,9 +50,13 @@ export const NewTransactionModal = ({ children }: NewTransactionModalProps) => {
   });
 
   const { createTransaction } = useTransaction();
+  const utils = api.useContext();
 
   const { mutate, isLoading } = api.transactions.create.useMutation({
-    onSuccess: data => createTransaction(data)
+    onSuccess: data => {
+      createTransaction(data);
+      utils.transactions.getAll.invalidate();
+    }
   });
 
   const handleCreateNewTransaction = async (data: TNewTransactionInput) => {
