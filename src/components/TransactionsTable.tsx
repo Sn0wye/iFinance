@@ -4,14 +4,12 @@ import { useTransaction } from '~/hooks/useTransaction';
 import { api } from '~/utils/api';
 import { dateFormatter, priceFormatter } from '~/utils/formatter';
 import { Confirm } from './ui/confirm';
-import { useToast } from './ui/use-toast';
 
 export const TransactionsTable = () => {
   const { filteredTransactions } = useTransaction();
 
   const { deleteTransaction } = useTransaction();
   const utils = api.useContext();
-  const { toast } = useToast();
 
   const { mutate, isLoading } = api.transactions.delete.useMutation({
     onSuccess: deletedTransaction => deleteTransaction(deletedTransaction),

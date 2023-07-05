@@ -3,7 +3,7 @@ import { ArrowCircleDown, ArrowCircleUp, CurrencyDollar } from 'phosphor-react';
 import { useSummary } from '../hooks/useSummary';
 import { priceFormatter } from '../utils/formatter';
 import { cn } from '~/utils/cn';
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 export const Summary = () => {
   const summary = useSummary();

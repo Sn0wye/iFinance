@@ -11,7 +11,7 @@ import { Loader2 } from 'lucide-react';
 const Dashboard = () => {
   const { setTransactions, transactions } = useTransaction();
 
-  const { data, isLoading } = api.transactions.getAll.useQuery(undefined, {
+  const { isLoading } = api.transactions.getAll.useQuery(undefined, {
     onSuccess: data => setTransactions(data),
     refetchOnWindowFocus: false
   });

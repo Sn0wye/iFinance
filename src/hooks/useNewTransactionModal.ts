@@ -5,7 +5,7 @@ interface ContextType {
   toggle: () => void;
 }
 
-export const useNewTransactionModal = create<ContextType>((set, get) => ({
+export const useNewTransactionModal = create<ContextType>(set => ({
   isOpen: false,
   toggle: () => set(state => ({ isOpen: !state.isOpen }))
 }));

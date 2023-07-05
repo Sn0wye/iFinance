@@ -27,7 +27,8 @@
     "**/*.mjs",
     "postcss.config.js",
     "tailwind.config.ts",
-    "prettier.config.js"
+    "prettier.config.js",
+    ".eslintrc.cjs"
   ],
   "exclude": ["node_modules"]
 }

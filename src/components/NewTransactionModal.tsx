@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from '~/components/ui/button';
 import {
@@ -15,16 +15,14 @@ import { Label } from '~/components/ui/label';
 import { useNewTransactionModal } from '~/hooks/useNewTransactionModal';
 import { useTransaction } from '~/hooks/useTransaction';
 import {
-  TNewTransactionInput,
+  type TNewTransactionInput,
   newTransactionInput
 } from '~/schemas/transaction/newTransactionInput';
 import { api } from '~/utils/api';
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue
 } from './ui/select';
@@ -36,18 +34,13 @@ type NewTransactionModalProps = {
 export const NewTransactionModal = ({ children }: NewTransactionModalProps) => {
   const { isOpen, toggle } = useNewTransactionModal();
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors, isSubmitting }
-  } = useForm<TNewTransactionInput>({
-    resolver: zodResolver(newTransactionInput),
-    defaultValues: {
-      type: 'INCOME'
-    }
-  });
+  const { register, handleSubmit, control, reset } =
+    useForm<TNewTransactionInput>({
+      resolver: zodResolver(newTransactionInput),
+      defaultValues: {
+        type: 'INCOME'
+      }
+    });
 
   const { createTransaction } = useTransaction();
   const utils = api.useContext();

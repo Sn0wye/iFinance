@@ -22,7 +22,7 @@ export const SearchForm = () => {
 
   const { filterByQuery } = useTransaction();
 
-  const handleSearch = async (data: FormFields) => {
+  const handleSearch = (data: FormFields) => {
     const { query } = data;
     filterByQuery(query);
   };

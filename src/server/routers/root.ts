@@ -1,4 +1,4 @@
-import { publicProcedure, router } from '../trpc';
+import { router } from '../trpc';
 import { transactionRouter } from './transaction';
 
 export const rootRouter = router({

@@ -1,18 +1,16 @@
-import * as Dialog from '@radix-ui/react-dialog';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import { Github, Snowflake, Menu } from 'lucide-react';
 
 import { useClerk } from '@clerk/nextjs';
 import { useRouter } from 'next/router';
-import { api } from '~/utils/api';
 
 const Home: NextPage = () => {
   const { openSignIn, user } = useClerk();
-  const router = useRouter();
+  const { push } = useRouter();
 
   if (user) {
-    router.push('/dashboard');
+    push('/dashboard');
   }
 
   return (
@@ -21,7 +19,7 @@ const Home: NextPage = () => {
         <nav className='z-10 mx-auto mt-8 flex w-full max-w-[1172px] items-center justify-between p-4'>
           <div className='flex items-center gap-5'>
             <a
-              className='cursor-pointer text-brand-500 hover:text-white'
+              className='text-brand-500 cursor-pointer hover:text-white'
               href='https://github.com/Sn0wye/iFinance'
               target='_blank'
               rel='noreferrer'
@@ -30,7 +28,7 @@ const Home: NextPage = () => {
             </a>
 
             <a
-              className='cursor-pointer text-brand-500 hover:text-white'
+              className='text-brand-500 cursor-pointer hover:text-white'
               href='https://snowye.dev'
               target='_blank'
               rel='noreferrer'
@@ -52,13 +50,13 @@ const Home: NextPage = () => {
 
           <Menu
             size={34}
-            className='cursor-pointer text-brand-500 hover:text-white'
+            className='text-brand-500 cursor-pointer hover:text-white'
           />
         </nav>
 
         <main className='mx-auto mt-44 flex w-full max-w-[1172px] items-center justify-between'>
           <section className='w-1/2'>
-            <h1 className='break-words font-overpass text-5xl font-bold text-gray-300'>
+            <h1 className='font-overpass break-words text-5xl font-bold text-gray-300'>
               Organizing your finances was never been so easy!
             </h1>
             <p className='mt-6 text-2xl text-gray-400'>
@@ -73,7 +71,7 @@ const Home: NextPage = () => {
                   afterSignInUrl: '/dashboard'
                 })
               }
-              className='mt-16 select-none rounded-lg border-2 border-solid border-black bg-brand-500 px-8 py-4 font-overpass text-2xl font-semibold shadow-[4px_4px_0_0_#000] transition-all  duration-200 ease-linear focus:shadow-none active:translate-x-1 active:translate-y-1 active:shadow-none'
+              className='bg-brand-500 font-overpass mt-16 select-none rounded-lg border-2 border-solid border-black px-8 py-4 text-2xl font-semibold shadow-[4px_4px_0_0_#000] transition-all  duration-200 ease-linear focus:shadow-none active:translate-x-1 active:translate-y-1 active:shadow-none'
             >
               Join us
             </button>

@@ -5,7 +5,7 @@ interface ContextType {
   toggle: () => void;
 }
 
-export const useCommandPalette = create<ContextType>((set, get) => ({
+export const useCommandPalette = create<ContextType>(set => ({
   isOpen: false,
   toggle: () => set(state => ({ isOpen: !state.isOpen }))
 }));
