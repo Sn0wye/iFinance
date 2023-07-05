@@ -1,4 +1,3 @@
-import { Cardholder } from 'phosphor-react';
 import { Header } from '~/components/Header';
 import { SearchForm } from '~/components/SearchForm';
 import { Summary } from '~/components/Summary';
@@ -6,7 +5,7 @@ import { TransactionsTable } from '~/components/TransactionsTable';
 import { useTransaction } from '../hooks/useTransaction';
 import { api } from '../utils/api';
 import { RedirectToSignIn, SignedOut } from '@clerk/nextjs';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Wallet } from 'lucide-react';
 
 const Dashboard = () => {
   const { setTransactions, transactions } = useTransaction();
@@ -35,7 +34,7 @@ const Dashboard = () => {
         ) : (
           <TransactionsTable />
         )}
-        {!isLoading && transactions.length === 0 && <NoTransactions />}
+        {!isLoading && transactions.length !== 0 && <NoTransactions />}
       </div>
     </div>
   );
@@ -44,7 +43,7 @@ const Dashboard = () => {
 const NoTransactions = () => {
   return (
     <div className='mx-auto flex flex-col items-center'>
-      <Cardholder size={48} alt='Clipboard Icon' className='mt-16' />
+      <Wallet className='mt-16 h-12 w-12' aria-label='Clipboard Icon' />
       <p className='mt-4 font-bold leading-6'>
         You don&apos;t have registered any transactions yet
       </p>

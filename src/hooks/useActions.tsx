@@ -1,5 +1,5 @@
 import { type Action } from 'kbar';
-import { Cardholder, SignOut } from 'phosphor-react';
+import { Wallet, LogOut } from 'lucide-react';
 
 import { useNewTransactionModal } from './useNewTransactionModal';
 // import { useClerk } from '@clerk/nextjs';
@@ -13,7 +13,7 @@ export const useActions = () => {
     {
       id: 'create_new_transaction',
       name: 'Create new Transaction',
-      icon: <Cardholder size={20} />,
+      icon: <Wallet className='h-5 w-5' />,
       perform: () => newTransactionModal(),
       keywords: 'create-new-transaction',
       shortcut: ['n', 't']
@@ -21,7 +21,7 @@ export const useActions = () => {
     {
       id: 'signout',
       name: 'Sign out',
-      icon: <SignOut size={20} />,
+      icon: <LogOut className='h-5 w-5' />,
       // perform: () => signOut(),
       section: 'Account'
     }

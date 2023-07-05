@@ -1,4 +1,4 @@
-import { TrashSimple } from 'phosphor-react';
+import { Trash2 } from 'lucide-react';
 
 import { useTransaction } from '~/hooks/useTransaction';
 import { api } from '~/utils/api';
@@ -66,7 +66,7 @@ export const TransactionsTable = () => {
                 isLoading={isLoading}
               >
                 <button className='rounded p-2 leading-none text-red-500 transition-colors hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white'>
-                  <TrashSimple size={20} />
+                  <Trash2 className='h-5 w-5' />
                 </button>
               </Confirm>
             </td>

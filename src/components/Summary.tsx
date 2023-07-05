@@ -1,9 +1,8 @@
-import { ArrowCircleDown, ArrowCircleUp, CurrencyDollar } from 'phosphor-react';
-
 import { useSummary } from '../hooks/useSummary';
 import { priceFormatter } from '../utils/formatter';
 import { cn } from '~/utils/cn';
 import { type ReactNode } from 'react';
+import { TrendingDown, TrendingUp, Wallet } from 'lucide-react';
 
 export const Summary = () => {
   const summary = useSummary();
@@ -12,20 +11,20 @@ export const Summary = () => {
     <section className='mx-auto -mt-20 grid w-full max-w-[1120px] grid-cols-3 gap-8 px-6'>
       <SummaryCard
         title='Incomes'
-        icon={<ArrowCircleUp size={32} color='#00b37e' />}
+        icon={<TrendingUp className='h-8 w-8 text-emerald-500' />}
         value={summary.income}
       />
 
       <SummaryCard
         title='Expenses'
-        icon={<ArrowCircleDown size={32} color='#f75a68' />}
+        icon={<TrendingDown className='h-8 w-8 text-red-500' />}
         value={summary.expense}
       />
 
       <SummaryCard
         variant='highlight'
         title='Total'
-        icon={<CurrencyDollar size={32} color='#fff' />}
+        icon={<Wallet className='h-8 w-8 text-zinc-900' />}
         value={summary.total}
       />
     </section>
