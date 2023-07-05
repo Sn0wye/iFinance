@@ -49,17 +49,12 @@ const SummaryCard = ({
     <div
       className={cn(
         'rounded-md p-8',
-        variant === 'highlight' ? 'bg-emerald-500' : 'bg-zinc-800'
+        variant === 'highlight'
+          ? 'bg-zinc-100 text-zinc-900'
+          : 'bg-zinc-800 text-white'
       )}
     >
-      <header
-        className={cn(
-          'flex items-center justify-between',
-          variant === 'highlight'
-            ? 'text-lg font-bold text-white'
-            : 'text-zinc-300'
-        )}
-      >
+      <header className={cn('flex items-center justify-between')}>
         <h3>{title}</h3>
         {icon}
       </header>

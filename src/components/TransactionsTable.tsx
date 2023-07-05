@@ -4,6 +4,7 @@ import { useTransaction } from '~/hooks/useTransaction';
 import { api } from '~/utils/api';
 import { dateFormatter, priceFormatter } from '~/utils/formatter';
 import { Confirm } from './ui/confirm';
+import { cn } from '~/utils/cn';
 
 export const TransactionsTable = () => {
   const { filteredTransactions } = useTransaction();
@@ -39,11 +40,12 @@ export const TransactionsTable = () => {
             <td width='50%'>{transaction.description}</td>
             <td>
               <span
-                className={
+                className={cn(
+                  'text-lg font-medium',
                   transaction.type === 'INCOME'
-                    ? 'text-emerald-300'
-                    : 'text-red-300'
-                }
+                    ? 'text-emerald-500'
+                    : 'text-red-500'
+                )}
               >
                 {transaction.type === 'EXPENSE' && '- '}
                 {priceFormatter.format(transaction.amount)}
@@ -63,7 +65,7 @@ export const TransactionsTable = () => {
                 }
                 isLoading={isLoading}
               >
-                <button className='rounded p-2 leading-none text-red-500 transition-colors hover:bg-zinc-900'>
+                <button className='rounded p-2 leading-none text-red-500 transition-colors hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white'>
                   <TrashSimple size={20} />
                 </button>
               </Confirm>
