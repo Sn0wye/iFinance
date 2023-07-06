@@ -11,9 +11,9 @@ export const env = createEnv({
     // Add `.min(1) if you want to make sure they're not empty
     NODE_ENV: z.enum(['development', 'test', 'production']),
     DATABASE_URL: z.string().url().min(1),
-    DATABASE_HOST: z.string().min(1),
-    DATABASE_USERNAME: z.string().min(1),
-    DATABASE_PASSWORD: z.string().min(1),
+    // DATABASE_HOST: z.string().min(1),
+    // DATABASE_USERNAME: z.string().min(1),
+    // DATABASE_PASSWORD: z.string().min(1),
     CLERK_SECRET_KEY: z.string().min(1)
   },
   client: {
@@ -30,9 +30,9 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     DATABASE_URL: process.env.DATABASE_URL,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
-    DATABASE_HOST: process.env.DATABASE_HOST,
-    DATABASE_USERNAME: process.env.DATABASE_USERNAME,
-    DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
+    // DATABASE_HOST: process.env.DATABASE_HOST,
+    // DATABASE_USERNAME: process.env.DATABASE_USERNAME,
+    // DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
       process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
