@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
-
-import { useTransaction } from './useTransaction';
+import { api } from '~/utils/api';
 
 export const useSummary = () => {
-  const { transactions } = useTransaction();
+  const { data: transactions } = api.transactions.getAll.useQuery();
+
+  if (!transactions) return;
 
   const summary = useMemo(() => {
     return transactions.reduce(

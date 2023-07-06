@@ -1,19 +1,18 @@
 import { Trash2 } from 'lucide-react';
 
-import { useTransaction } from '~/hooks/useTransaction';
 import { api } from '~/utils/api';
 import { dateFormatter, priceFormatter } from '~/utils/formatter';
 import { Confirm } from './ui/confirm';
 import { cn } from '~/utils/cn';
 
 export const TransactionsTable = () => {
-  const { filteredTransactions } = useTransaction();
-
-  const { deleteTransaction } = useTransaction();
   const utils = api.useContext();
+  const { data } = api.transactions.getAll.useQuery();
 
   const { mutate, isLoading } = api.transactions.delete.useMutation({
-    onSuccess: deletedTransaction => deleteTransaction(deletedTransaction),
+    onSuccess() {
+      utils.transactions.getAll.invalidate();
+    },
     async onMutate(deletedTransaction) {
       await utils.transactions.getAll.cancel();
       const prevData = utils.transactions.getAll.getData();
@@ -32,10 +31,14 @@ export const TransactionsTable = () => {
     }
   });
 
+  if (!data) {
+    return null;
+  }
+
   return (
     <table className='table'>
       <tbody>
-        {filteredTransactions.map(transaction => (
+        {data.map(transaction => (
           <tr key={transaction.id}>
             <td width='50%'>{transaction.description}</td>
             <td>

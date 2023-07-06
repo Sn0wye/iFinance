@@ -2,18 +2,12 @@ import { Header } from '~/components/Header';
 import { SearchForm } from '~/components/SearchForm';
 import { Summary } from '~/components/Summary';
 import { TransactionsTable } from '~/components/TransactionsTable';
-import { useTransaction } from '../hooks/useTransaction';
 import { api } from '../utils/api';
 import { RedirectToSignIn, SignedOut } from '@clerk/nextjs';
 import { Loader2, Wallet } from 'lucide-react';
 
 const Dashboard = () => {
-  const { setTransactions, transactions } = useTransaction();
-
-  const { isLoading } = api.transactions.getAll.useQuery(undefined, {
-    onSuccess: data => setTransactions(data),
-    refetchOnWindowFocus: false
-  });
+  const { data, isLoading } = api.transactions.getAll.useQuery();
 
   return (
     <div>
@@ -34,7 +28,7 @@ const Dashboard = () => {
         ) : (
           <TransactionsTable />
         )}
-        {!isLoading && transactions.length === 0 && <NoTransactions />}
+        {!isLoading && data?.length === 0 && <NoTransactions />}
       </div>
     </div>
   );

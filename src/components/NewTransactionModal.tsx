@@ -13,7 +13,6 @@ import {
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import { useNewTransactionModal } from '~/hooks/useNewTransactionModal';
-import { useTransaction } from '~/hooks/useTransaction';
 import {
   type TNewTransactionInput,
   newTransactionInput
@@ -42,12 +41,10 @@ export const NewTransactionModal = ({ children }: NewTransactionModalProps) => {
       }
     });
 
-  const { createTransaction } = useTransaction();
   const utils = api.useContext();
 
   const { mutate, isLoading } = api.transactions.create.useMutation({
-    onSuccess: data => {
-      createTransaction(data);
+    onSuccess() {
       utils.transactions.getAll.invalidate();
     }
   });

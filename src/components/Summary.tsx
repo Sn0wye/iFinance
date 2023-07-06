@@ -7,6 +7,8 @@ import { TrendingDown, TrendingUp, Wallet } from 'lucide-react';
 export const Summary = () => {
   const summary = useSummary();
 
+  if (!summary) return null;
+
   return (
     <section className='mx-auto -mt-20 grid w-full max-w-[1120px] grid-cols-3 gap-8 px-6'>
       <SummaryCard
