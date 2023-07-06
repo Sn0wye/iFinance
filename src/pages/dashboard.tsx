@@ -34,7 +34,7 @@ const Dashboard = () => {
         ) : (
           <TransactionsTable />
         )}
-        {!isLoading && transactions.length !== 0 && <NoTransactions />}
+        {!isLoading && transactions.length === 0 && <NoTransactions />}
       </div>
     </div>
   );
