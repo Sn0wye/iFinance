@@ -1,4 +1,4 @@
-import { type Transaction } from '@prisma/client';
+import { type Transaction } from '~/db/schema';
 import { create } from 'zustand';
 
 interface TransactionsContext {

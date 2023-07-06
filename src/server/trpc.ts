@@ -8,7 +8,7 @@ import type {
   SignedOutAuthObject
 } from '@clerk/nextjs/api';
 
-import { prisma } from './db';
+import { db } from '../db';
 import { ZodError } from 'zod';
 
 type CreateContextOptions = {
@@ -26,7 +26,7 @@ type CreateContextOptions = {
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     auth: opts.auth,
-    prisma
+    db
   };
 };
 
